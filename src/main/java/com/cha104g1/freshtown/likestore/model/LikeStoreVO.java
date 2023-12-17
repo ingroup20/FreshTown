@@ -1,7 +1,7 @@
 package com.cha104g1.freshtown.likestore.model;
 
 
-public class Like_storeVO {
+public class LikeStoreVO {
 	private Integer	id;
 	private Integer	customerId;
 	private Integer	storeId;
