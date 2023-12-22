@@ -3,64 +3,85 @@ package com.cha104g1.freshtown.service.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+@Entity
+@Table(name="service")
 public class ServiceVO implements Serializable{
-    private Integer custserno;
-    private Integer pempid;
-    private Integer storeid;
-    private Integer customerid;
-    private String custmessage;
-    private Date custtime;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="custSerNo", updatable= false)
+	private Integer custSerNo;
+    
+    @Column(name="pEmpId")
+    private Integer pEmpId;
+    
+    @Column(name="storeId", nullable=true)
+    private Integer storeId;
+    
+    @Column(name="customerId", nullable=true)
+    private Integer customerId;
+    
+    @Column(name="custMessage", length=255)
+    private String custMessage;
+    
+    @Column(name="custTime")
+    private Date custTime;
     
 	public ServiceVO() {
 		super();
 	}
 
-	public Integer getCustserno() {
-		return custserno;
+	public Integer getCustSerNo() {
+		return custSerNo;
 	}
 
-	public void setCustserno(Integer custserno) {
-		this.custserno = custserno;
+	public void setCustSerNo(Integer custSerNo) {
+		this.custSerNo = custSerNo;
 	}
 
-	public Integer getPempid() {
-		return pempid;
+	public Integer getPEmpId() {
+		return pEmpId;
 	}
 
-	public void setPempid(Integer pempid) {
-		this.pempid = pempid;
+	public void setPEmpId(Integer pEmpId) {
+		this.pEmpId = pEmpId;
 	}
 
-	public Integer getStoreid() {
-		return storeid;
+	public Integer getStoreId() {
+		return storeId;
 	}
 
-	public void setStoreid(Integer storeid) {
-		this.storeid = storeid;
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 
-	public Integer getCustomerid() {
-		return customerid;
+	public Integer getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomerid(Integer customerid) {
-		this.customerid = customerid;
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
 
-	public String getCustmessage() {
-		return custmessage;
+	public String getCustMessage() {
+		return custMessage;
 	}
 
-	public void setCustmessage(String custmessage) {
-		this.custmessage = custmessage;
+	public void setCustMessage(String custMessage) {
+		this.custMessage = custMessage;
 	}
 
-	public Date getCusttime() {
-		return custtime;
+	public Date getCustTime() {
+		return custTime;
 	}
 
-	public void setCusttime(Date custtime) {
-		this.custtime = custtime;
+	public void setCustTime(Date custTime) {
+		this.custTime = custTime;
 	}
 	
     
