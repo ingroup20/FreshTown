@@ -21,6 +21,8 @@
 	</properties>
 
 	<dependencies>
+		
+<!--	新增	=================================================-->
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -35,7 +37,7 @@
 			<version>5.6.15.Final</version>
 		</dependency>
 
-		
+<!--		=================================================-->
 		
 		<dependency>
 			<groupId>javax.servlet</groupId>

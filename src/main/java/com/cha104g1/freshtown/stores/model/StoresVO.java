@@ -3,34 +3,97 @@ package com.cha104g1.freshtown.stores.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.cha104g1.freshtown.likestore.model.LikeStoreVO;
+import com.cha104g1.freshtown.orders.model.OrdersVO;
+
+
+@Entity
+@Table(name = "stores")
 public class StoresVO {
+	@Id
+	@Column(name = "storeId", updatable = false)
 	private Integer	storeId;
+	
+	@Column(name = "storeAccount")
 	private String	storeAccount;
+	
+	@Column(name = "storePw")
 	private String	storePw;
+	
+	@Column(name = "storeName")
 	private String	storeName;
-	private String	store_gui;
+	
+	@Column(name = "storeGui")
+	private String	storeGui;
+	
+	@Column(name = "storeAddress")
 	private String	storeAddress;
+	
+	@Column(name = "storePhone")
 	private String	storePhone;
+	
+	@Column(name = "storeState")
 	private Integer	storeState;
+	
+	@Column(name = "storeLv")
 	private Integer	storeLv;
+	
+	@Column(name = "createDate")
 	private Date	createDate;
+	
+	@Column(name = "payDate")
 	private Date	payDate;
+	
+	@Column(name = "photo", columnDefinition = "longblob")
 	private byte[]	photo;
+	
+	@Column(name = "storeDesc")
 	private String	storeDesc;
+	
+	@Column(name = "pushUp")
 	private Integer	pushUp;
+	
+	@Column(name = "ownerName")
 	private String	ownerName;
+	
+	@Column(name = "ownerMob")
 	private String	ownerMob;
+	
+	@Column(name = "ownerId")
 	private String	ownerId;
+	
+	@Column(name = "ownerAddress")
 	private String	ownerAddress;
+	
+	@Column(name = "ownerEmail")
 	private String	ownerEmail;
+	
+	@Column(name = "scorePeople")
 	private Integer	scorePeople;
-	private Integer	total_score;
+	
+	@Column(name = "totalScore")
+	private Integer	totalScore;
+	
+	@Column(name = "storeLat", columnDefinition = "Decimal")
 	private BigDecimal	storeLat;
+	
+	@Column(name = "storeLag", columnDefinition = "Decimal")
 	private BigDecimal	storeLag;
+	
+	@Column(name = "openTime")
 	private String	openTime;
+	
+	@Column(name = "restDay")
 	private String	restDay;
-
 	
 	
 	public Integer getStoreId() {
@@ -147,11 +210,11 @@ public class StoresVO {
 	public void setScorePeople(Integer scorePeople) {
 		this.scorePeople = scorePeople;
 	}
-	public Integer getTotal_score() {
-		return total_score;
+	public Integer getTotalScore() {
+		return totalScore;
 	}
-	public void setTotal_score(Integer total_score) {
-		this.total_score = total_score;
+	public void setTotalScore(Integer totalScore) {
+		this.totalScore = totalScore;
 	}
 	public BigDecimal getStoreLat() {
 		return storeLat;
@@ -178,11 +241,155 @@ public class StoresVO {
 	public void setRestDay(String restDay) {
 		this.restDay = restDay;
 	}
-	public String getStore_gui() {
-		return store_gui;
+	public String getStoreGui() {
+		return storeGui;
 	}
-	public void setStore_gui(String store_gui) {
-		this.store_gui = store_gui;
+	public void setStoreGui(String storeGui) {
+		this.storeGui = storeGui;
 	}
+	
+	
+//	@OneToMany(mappedBy = "storeId" cascade= CascadeType.ALL)
+//	private Set<MealsVO> storeId;
+//	
+//	public Set<MealsVO> getStoreId(){
+//		return storeId;
+//	}
+//	
+//	public void setStoreId(Set<MealsVO> storeId) {
+//		this.storeId = storeId;
+//	}
+	
+	//收藏&黑名單表單
+	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+	private Set<LikeStoreVO> likeStoreVO;
+	
+	public Set<LikeStoreVO> getLikeStoreVO(){
+		return likeStoreVO;
+	}
+	
+	public void setLikeStoreVO(Set<LikeStoreVO> likeStoreVO) {
+		this.likeStoreVO = likeStoreVO;
+	}
+	
+//	//店家員工表單
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<StoreEmpVO> storeEmpVO;
+//	
+//	public Set<StoreEmpVO> getStoreEmpVO(){
+//		return storeEmpVO;
+//	}
+//	
+//	public void setStoreEmpVO(Set<StoreEmpVO> storeEmpVO) {
+//		this.storeEmpVO = storeEmpVO;
+//	}
+	
+	
+	
+//	//線上諮詢紀錄
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<ServiceVO> serviceVO;
+//	
+//	public Set<ServiceVO> getSServiceVO(){
+//		return serviceVO;
+//	}
+//	
+//	public void setServiceVO(Set<ServiceVO> serviceVO) {
+//		this.serviceVO = serviceVO;
+//	}
+	
+	
+	
+	
+	
+//	//餐點表單
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<MealsVO> mealsVO;
+//	
+//	public Set<MealsVO> getMealsVO(){
+//		return mealsVO;
+//	}
+//	
+//	public void setMealsVO(Set<MealsVO> mealsVO) {
+//		this.mealsVO = mealsVO;
+//	}
+	
+//	//物料分類
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<ItemsClassVO> itemsClassVO;
+//	
+//	public Set<ItemsClassVO> getItemsClassVO(){
+//		return itemsClassVO;
+//	}
+//	
+//	public void setItemsClassVO(Set<ItemsClassVO> itemsClassVO) {
+//		this.itemsClassVO = itemsClassVO;
+//	}
+	
+	
+//	//物料
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<MaterialVO> materialVO;
+//	
+//	public Set<MaterialVO> getMaterialVO(){
+//		return materialVO;
+//	}
+//	
+//	public void setMaterialVO(Set<MaterialVO> materialVO) {
+//		this.materialVO = materialVO;
+//	}
+	
+//	//領料表
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<PickingVO> pickingVO;
+//	
+//	public Set<PickingVO> getPickingVO(){
+//		return pickingVO;
+//	}
+//	
+//	public void setPickingVO(Set<PickingVO> pickingVO) {
+//		this.pickingVO = pickingVO;
+//	}
+	
+//	//採購單
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<SupOrderVO> supOrderVO;
+//	
+//	public Set<SupOrderVO> getSupOrderVO(){
+//		return supOrderVO;
+//	}
+//	
+//	public void setSupOrderVO(Set<SupOrderVO> supOrderVO) {
+//		this.supOrderVO = supOrderVO;
+//	}
+	
+//	//供應商
+//	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+//	private Set<SupplierVO> supplierVO;
+//	
+//	public Set<SupplierVO> getSupplierVO(){
+//		return supplierVO;
+//	}
+//	
+//	public void setSupplierVO(Set<SupplierVO> supplierVO) {
+//		this.supplierVO = supplierVO;
+//	}
+	
+	//訂單
+	@OneToMany(mappedBy = "storesVO" ,cascade= CascadeType.ALL)
+	private Set<OrdersVO> ordersVO;
+	
+	public Set<OrdersVO> getOrdersVO(){
+		return ordersVO;
+	}
+	
+//	public void setOrdersVO(Set<OrdersVO> ordersVO) {
+//		this.ordersVO = ordersVO;
+//	}
+	
+
+	
+
 
 }
+ 
