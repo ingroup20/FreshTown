@@ -1,25 +1,80 @@
 package com.cha104g1.freshtown.orders.model;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.cha104g1.freshtown.stores.model.StoresVO;
+import com.cha104g1.freshtown.orderdetail.model.OrderDetailVO;
+import com.cha104g1.freshtown.refunds.model.RefundsVO;
+
+@Entity
+@Table(name = "orders")
 public class OrdersVO {
+	@Id
+	@Column(name = "orderId", updatable = false)
 	private Integer orderId;
+	
+	@Column(name="orderState")
 	private Integer orderState;
+	
+	@Column(name="orderTime")
 	private Timestamp orderTime;
+	
+	@Column(name="doneTime")
 	private Timestamp doneTime;
+	
+	@Column(name="finishTime")
 	private Timestamp finishTime;
+	
+	@Column(name="delayTime")
 	private Timestamp delayTime;
-	private Integer customerId;
+	
+//	@JoinColumn(name="customerId", referencedColumnName="customerId")
+//	private CustomerVO customerVO;
+			//	@Column(name="customerId")
+			//	private Integer customerId;
+	
+	@Column(name="totalPrice")
 	private Integer totalPrice;
-	private Integer storeId;
+	
+	@JoinColumn(name="storeId", referencedColumnName="storeId")
+	private StoresVO storesVO;
+			//	@Column(name="storeId")
+			//	private Integer storeId;
+	
+	@Column(name="delayDesc")
 	private String delayDesc;
+	
+	@Column(name="comtVal")
 	private Integer comtVal;
+	
+	@Column(name="comtCont")
 	private String comtCont;
+	
+	@Column(name="comtTime")
 	private Timestamp comtTime;
+	
+	@Column(name="remitDate")
 	private Timestamp remitDate;
+	
+	@Column(name="remitState")
 	private String remitState;
+	
+	@Column(name="payDate")
 	private Timestamp payDate;
+	
+	@Column(name="payMethod")
 	private Integer payMethod;
+	
+	@Column(name="payState")
 	private Integer payState;
 	
 	
@@ -59,24 +114,24 @@ public class OrdersVO {
 	public void setDelayTime(Timestamp delayTime) {
 		this.delayTime = delayTime;
 	}
-	public Integer getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
-	}
+//	public Integer getCustomerId() {
+//		return customerId;
+//	}
+//	public void setCustomerId(Integer customerId) {
+//		this.customerId = customerId;
+//	}
 	public Integer getTotalPrice() {
 		return totalPrice;
 	}
 	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public Integer getStoreId() {
-		return storeId;
-	}
-	public void setStoreId(Integer storeId) {
-		this.storeId = storeId;
-	}
+//	public Integer getStoreId() {
+//		return storeId;
+//	}
+//	public void setStoreId(Integer storeId) {
+//		this.storeId = storeId;
+//	}
 	public String getDelayDesc() {
 		return delayDesc;
 	}
@@ -131,5 +186,43 @@ public class OrdersVO {
 	public void setPayState(Integer payState) {
 		this.payState = payState;
 	}
+//	public CustomerVO getCustomerVO() {
+//		return customerVO;
+//	}
+//	public void setCustomerVO(CustomerVO customerVO) {
+//		this.customerVO = customerVO;
+//	}
+	public StoresVO getStoresVO() {
+		return storesVO;
+	}
+	public void setStoresVO(StoresVO storesVO) {
+		this.storesVO = storesVO;
+	}
+	
+	
+	@OneToMany(mappedBy="ordersVO", cascade=CascadeType.ALL)
+	private Set<OrderDetailVO> orderDetailVO;
+
+
+	public Set<OrderDetailVO> getOrderDetailVO() {
+		return orderDetailVO;
+	}
+	public void setOrderDetailVO(Set<OrderDetailVO> orderDetailVO) {
+		this.orderDetailVO = orderDetailVO;
+	}
+	
+	
+	@OneToMany(mappedBy="ordersVO",cascade=CascadeType.ALL)
+	private Set<RefundsVO> refundsVO;
+
+
+	public Set<RefundsVO> getRefundsVO() {
+		return refundsVO;
+	}
+	public void setRefundsVO(Set<RefundsVO> refundsVO) {
+		this.refundsVO = refundsVO;
+	}
+	
+	
 	
 }
