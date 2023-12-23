@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class SupDAO implements SupDAO_interface {
+public class SupDAO implements SupDAOIntf {
 
 	private static DataSource ds = null;
 	static {
@@ -25,11 +25,15 @@ public class SupDAO implements SupDAO_interface {
 	private static final String GET_ALL_STMT = 
 		"SELECT supId,supplierName,supplierContact,supplierPhone,storeId,supplierState FROM supplier order by supId";
 	private static final String GET_ONE_STMT = 
-		"SELECT supId,supplierName,supplierContact,supplierPhone,storeId,supplierState FROM supplier where supId = ?";
+		"SELECT supId,supplierName,supplierContact,supplierPhone,storeId,supplierState FROM supplier where supplierName = ?";
+	private static final String GET_ID_STMT = 
+			"SELECT supId,supplierName,supplierContact,supplierPhone,storeId,supplierState FROM supplier where supId = ?";
+	private static final String GET_CON_STMT = 
+			"SELECT supId,supplierName,supplierContact,supplierPhone,storeId,supplierState FROM supplier where supplierContact = ?";
 	private static final String DELETE = 
 		"DELETE FROM supplier where supId = ?";
 	private static final String UPDATE = 
-		"UPDATE supplier set supplierName=?, supplierContact=?, supplierPhone=?, storeId=?, supplierState=? where supId = ?";
+		"UPDATE supplier set supplierName=?, supplierContact=?, supplierPhone=?, supplierState=? where supId = ?";
 
 	@Override
 	public void insert(SupVO supVO) {
@@ -50,11 +54,11 @@ public class SupDAO implements SupDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any SQL errors
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-			// Clean up JDBC resources
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -90,15 +94,14 @@ public class SupDAO implements SupDAO_interface {
 			pstmt.setString(3, supVO.getSupplierPhone());
 			pstmt.setInt(4, supVO.getStoreId());
 			pstmt.setInt(5, supVO.getSupplierState());
-			pstmt.setInt(6, supVO.getSupId());
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-			// Clean up JDBC resources
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -133,11 +136,11 @@ public class SupDAO implements SupDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-			// Clean up JDBC resources
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -156,7 +159,7 @@ public class SupDAO implements SupDAO_interface {
 		}
 
 	}
-
+	
 	@Override
 	public SupVO findByPrimaryKey(Integer supId) {
 
@@ -168,14 +171,14 @@ public class SupDAO implements SupDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt = con.prepareStatement(GET_ID_STMT);
 
 			pstmt.setInt(1, supId);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo �]�٬� Domain objects
+
 				supVO = new SupVO();
 				supVO.setSupId(rs.getInt("supId"));
 				supVO.setSupplierName(rs.getString("supplierName"));
@@ -185,11 +188,129 @@ public class SupDAO implements SupDAO_interface {
 				supVO.setSupplierState(rs.getInt("supplierState"));
 			}
 
-			// Handle any driver errors
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-			// Clean up JDBC resources
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return supVO;
+	}
+
+	@Override
+	public SupVO findByKey(String supplierName) {
+
+		SupVO supVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setString(1, supplierName);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				supVO = new SupVO();
+				supVO.setSupId(rs.getInt("supId"));
+				supVO.setSupplierName(rs.getString("supplierName"));
+				supVO.setSupplierContact(rs.getString("supplierContact"));
+				supVO.setSupplierPhone(rs.getString("supplierPhone"));
+				supVO.setStoreId(rs.getInt("storeId"));
+				supVO.setSupplierState(rs.getInt("supplierState"));
+			}
+
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return supVO;
+	}
+	
+	@Override
+	public SupVO findByCon(String supplierContact) {
+
+		SupVO supVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_CON_STMT);
+
+			pstmt.setString(1, supplierContact);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				supVO = new SupVO();
+				supVO.setSupId(rs.getInt("supId"));
+				supVO.setSupplierName(rs.getString("supplierName"));
+				supVO.setSupplierContact(rs.getString("supplierContact"));
+				supVO.setSupplierPhone(rs.getString("supplierPhone"));
+				supVO.setStoreId(rs.getInt("storeId"));
+				supVO.setSupplierState(rs.getInt("supplierState"));
+			}
+
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+
 		} finally {
 			if (rs != null) {
 				try {
@@ -242,11 +363,11 @@ public class SupDAO implements SupDAO_interface {
 				list.add(supVO);
 			}
 
-			// Handle any driver errors
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-			// Clean up JDBC resources
+
 		} finally {
 			if (rs != null) {
 				try {
