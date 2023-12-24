@@ -1,8 +1,25 @@
 package com.cha104g1.freshtown.customizeddetail.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "customized_detail")
 public class CustomizedDetailVO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "custedDtlNo", updatable = false)
 	private Integer custedDtlNo;
+	
+	@JoinColumn(name = "custedItemsNo", referencedColumnName = "custedItemsNo")
 	private Integer custedItemsNo;
+	
+	@Column(name = "custedDtlName")
 	private String custedDtlName;
 	
 	public CustomizedDetailVO() {

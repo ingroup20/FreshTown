@@ -2,14 +2,43 @@ package com.cha104g1.freshtown.meals.model;
 
 import java.sql.Time;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "meals")
 public class MealsVO {
+	@OneToMany(mappedBy = "mealNo")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "mealNo", updatable = false)
 	private Integer mealNo;
+
+	@Column(name = "mealName")
 	private String mealName;
+
+	@Column(name = "mealPrice")
 	private Integer mealPrice;
+
+	@JoinColumn(name = "mealTypeNo", referencedColumnName = "mealTypeNo")
 	private Integer mealTypeNo;
+
+	@Column(name = "mealOnsale")
 	private Integer mealOnsale;
+
+	@JoinColumn(name = "storeId", referencedColumnName = "storeId")
 	private Integer storeId;
+
+	@Column(name = "mealPicture")
 	private byte[] mealPicture;
+
+	@Column(name = "cookingTime")
 	private Time cookingTime;
 	
 	public MealsVO() {
