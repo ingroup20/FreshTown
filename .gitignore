@@ -6,3 +6,6 @@ target/
 .DS-Store
 .idea
 *.iml
+hibernate.cfg.xml
+
+Util.java
