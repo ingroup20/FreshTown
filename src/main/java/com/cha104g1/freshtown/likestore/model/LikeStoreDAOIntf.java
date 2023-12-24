@@ -8,7 +8,7 @@ public interface LikeStoreDAOIntf {
 	
 	int update(LikeStoreVO likeStoreVO);
 	
-	LikeStoreVO getById(Integer id);
+	LikeStoreVO getById(Integer custedOrderNo);
 	
 	List<LikeStoreVO> getAll();
 	
