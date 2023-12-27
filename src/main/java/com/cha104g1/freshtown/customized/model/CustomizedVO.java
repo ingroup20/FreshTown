@@ -23,6 +23,9 @@ public class CustomizedVO {
 	@JoinColumn(name = "custedItemsNo", referencedColumnName = "custedItemsNo")
 	private Integer custedItemsNo;
 	
+	@Column(name = "custedStatus")
+	private Integer custedStatus;
+	
 	public CustomizedVO() {
 		super();
 	}
@@ -52,6 +55,14 @@ public class CustomizedVO {
 		this.custedItemsNo = custedItemsNo;
 	}
 	
+	public Integer getCustedStatus() {
+		return custedStatus;
+	}
+
+	public void setCustedStatus(Integer custedStatus) {
+		this.custedStatus = custedStatus;
+	}
+
 	static class CompositeDetail implements Serializable {
 		private static final long serialVersionUID = 1L;
 
